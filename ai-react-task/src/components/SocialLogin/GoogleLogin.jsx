@@ -13,7 +13,7 @@ const GoogleLogin = () => {
 
     const from = location.state?.from?.pathname || '/';
 
-    console.log(location)
+    // console.log(location)
 
     // Function to handle Google registration
     const registerByGoogle = () => {

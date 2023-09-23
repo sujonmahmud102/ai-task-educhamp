@@ -51,7 +51,7 @@ const Home = () => {
 
             })
 
-        console.log(prompt)
+        // console.log(prompt)
     }
 
     return (

@@ -121,7 +121,7 @@ async function run() {
         })
 
 
-        // 
+        // add user for voted 
         app.patch('/api/upvoted/:id', async (req, res) => {
             const id = req.params.id;
             const {
@@ -142,6 +142,19 @@ async function run() {
             res.send(result);
         })
 
+
+        // delete single chat
+        app.delete("/api/delete/:id", async (req, res) => {
+            const id = req.params.id;
+
+            const filter = {
+                _id: new ObjectId(id)
+            };
+
+
+            const result = await promptsCollection.deleteOne(filter);
+            res.send(result);
+        })
 
         // Send a ping to confirm a successful connection
         await client.db("admin").command({

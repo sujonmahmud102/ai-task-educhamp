@@ -1,5 +1,5 @@
 import clipboardCopy from 'clipboard-copy';
-import { AiFillHeart, AiOutlineShareAlt } from "react-icons/ai";
+import { AiFillDelete, AiFillHeart, AiOutlineShareAlt } from "react-icons/ai";
 import toast, { Toaster } from 'react-hot-toast';
 import { useContext } from 'react';
 import { Authcontext } from '../AuthProvider/AuthProvider';
@@ -51,7 +51,7 @@ const Messages = ({ prompts }) => {
     const handleCopy = (textToCopy) => {
         clipboardCopy(textToCopy)
             .then(() => {
-                toast.success('text copied, you can share now!')
+                toast.success('Text copied, you can share now!')
 
             })
             .catch((error) => {
@@ -59,6 +59,34 @@ const Messages = ({ prompts }) => {
             });
     };
 
+
+    // handle delete chat
+    const handleDelete = (id) => {
+        const url = `https://server-khaki-one.vercel.app/api/delete/${id}`
+        // console.log(id)
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch(url, {
+                    method: "DELETE"
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        // console.log(data);
+                        if (data.deletedCount === 1) {
+                            toast.success('Message deleted!')
+                        }
+                    })
+            }
+        })
+    }
 
     return (
         <div>
@@ -95,17 +123,21 @@ const Messages = ({ prompts }) => {
 
                         <div>
                             <button
-                                className={`p-2 ${p.upvoted && p.upvoted.includes(user?.uid)
-                                    ? 'text-red-500'
+                                className={`p-2 hover:bg-base-200 rounded-lg ${p.upvoted && p.upvoted.includes(user?.uid)
+                                    ? 'text-blue-500'
                                     : ''
                                     }`}
                                 title='save'
                                 onClick={() => handleUpvotes(p)}> <AiFillHeart /> </button>
                             <button
-                                className='p-2'
+                                className='p-2 hover:bg-base-200 rounded-lg'
                                 title='share'
                                 onClick={() => handleCopy(p.story)} > <AiOutlineShareAlt /> </button>
                             <Toaster />
+                            <button
+                                className="p-2 hover:bg-red-200 rounded-lg"
+                                title='delete'
+                                onClick={() => handleDelete(p._id)}> <AiFillDelete /> </button>
                         </div>
                     </div>
 

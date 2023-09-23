@@ -41,7 +41,7 @@ const Login = () => {
         signInByEmailPass(email, password)
             .then(result => {
                 const loggedUser = result.user;
-                console.log(loggedUser);
+                // console.log(loggedUser);
                 Swal.fire(
                     'Good job!',
                     'Successfully login',
@@ -70,7 +70,7 @@ const Login = () => {
                 }
 
             })
-        console.log(email, password)
+        // console.log(email, password)
     }
 
 
