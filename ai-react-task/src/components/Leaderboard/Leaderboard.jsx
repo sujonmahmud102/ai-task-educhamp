@@ -117,7 +117,7 @@ const Leaderboard = () => {
                                 title='save'
                                 onClick={() => handleUpvotes(p)}>
                                 Upvoted: {p.upvoted.length} <span className={`${p.upvoted && p.upvoted.includes(user?.uid)
-                                    ? 'text-red-500'
+                                    ? 'text-blue-500'
                                     : ''
                                     }`}> <AiFillHeart /></span>
                             </button>

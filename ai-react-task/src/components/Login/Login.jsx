@@ -42,11 +42,13 @@ const Login = () => {
             .then(result => {
                 const loggedUser = result.user;
                 // console.log(loggedUser);
-                Swal.fire(
-                    'Good job!',
-                    'Successfully login',
-                    'success'
-                );
+                Swal.fire({
+                    position: 'top-center',
+                    icon: 'success',
+                    title: 'User Login Successful.',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
                 form.reset();
                 navigate(from, { replace: true });
 

@@ -3,15 +3,20 @@ import { Authcontext } from "../AuthProvider/AuthProvider";
 import { AiOutlineSend } from "react-icons/ai";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import { useRef } from "react";
 
 
 const Home = () => {
     const { user } = useContext(Authcontext);
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+    const formRef = useRef(null);
 
-    const handleSubmitPrompt = (e) => {
+
+    // handle submit
+    const handleSubmitPrompt = (e, promptValue) => {
         e.preventDefault();
+
         // check user logged in or not
         if (!user) {
             return Swal.fire({
@@ -29,7 +34,7 @@ const Home = () => {
         }
 
         setLoading(true);
-        const prompt = e.target.prompt.value;
+        const prompt = promptValue || e.target.prompt.value;
 
         fetch('https://server-khaki-one.vercel.app/api/prompts', {
             method: 'POST',
@@ -37,7 +42,7 @@ const Home = () => {
                 'Content-type': 'application/json'
             },
             body: JSON.stringify({
-                prompt,
+                prompt: promptValue || prompt,
                 creatorName: user.displayName,
                 creatorEmail: user.email
             })
@@ -45,18 +50,27 @@ const Home = () => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data);
+                // console.log(data);
                 setLoading(false);
-                e.target.reset();
+                formRef.current.reset();
 
             })
 
         // console.log(prompt)
     }
 
+    const handleTextareaKeyPress = (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            // console.log(e)
+            const promptValue = e.target.value;
+            handleSubmitPrompt(e, promptValue);
+        }
+    };
+
     return (
         <div>
-            <form onSubmit={handleSubmitPrompt} className="">
+            <form ref={formRef} onSubmit={handleSubmitPrompt} className="">
                 <div className="mb-4 flex items-center justify-center">
                     <div className="w-full">
                         <textarea
@@ -66,6 +80,7 @@ const Home = () => {
                             disabled={loading || !user}
                             className="px-2 flex items-center justify-center w-full border rounded-md focus:outline-none focus:ring focus:border-blue-400"
                             required
+                            onKeyPress={handleTextareaKeyPress}
                         >
                         </textarea>
 

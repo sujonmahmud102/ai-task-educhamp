@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { FaGoogle } from 'react-icons/fa';
 import { Authcontext } from '../AuthProvider/AuthProvider';
+import toast, { Toaster } from 'react-hot-toast';
 
 
 
@@ -67,6 +68,7 @@ const GoogleLogin = () => {
         <div onClick={registerByGoogle} className='flex justify-center items-center btn btn-outline btn-light'>
             <div>
                 <FaGoogle></FaGoogle>
+                <Toaster />
             </div>
             <button className='ml-4'>
                 Continue With Google
