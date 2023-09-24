@@ -49,6 +49,7 @@ const Messages = ({ prompts }) => {
     }
 
     const handleCopy = (textToCopy) => {
+        // console.log(textToCopy)
         clipboardCopy(textToCopy)
             .then(() => {
                 toast.success('Text copied, you can share now!')
@@ -116,8 +117,10 @@ const Messages = ({ prompts }) => {
                                     </p>
                                 </div>
                             </div>
-                            <div className="chat-bubble chat-bubble-secondary text-justify">
-                                {p.story}
+                            <div className="chat-bubble chat-bubble-secondary text-justify whitespace-pre-wrap">
+                                <p>
+                                    {p.story.trimStart()}
+                                </p>
                             </div>
                         </div>
 

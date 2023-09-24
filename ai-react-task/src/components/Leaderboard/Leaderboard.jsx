@@ -106,9 +106,9 @@ const Leaderboard = () => {
                             <p>Text: </p>
                             <h3 className=''>  {p.prompt} </h3>
                         </div>
-                        <div className="text-justify text-lg mt-2 flex gap-2">
+                        <div className="text-justify text-lg mt-2 flex gap-2 ">
                             <p>Reply: </p>
-                            <h3 className=''>  {p.story} </h3>
+                            <h3 className='whitespace-pre-wrap'>{p.story.trimStart()} </h3>
                         </div>
 
                         <div className='flex items-center gap-5 my-2'>
